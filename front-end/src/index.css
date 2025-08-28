@@ -1,0 +1,10 @@
+/* Tailwind import */
+
+@import "tailwindcss";
+
+
+/* Font for page */
+
+body {
+  font-family: "Chirp", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
