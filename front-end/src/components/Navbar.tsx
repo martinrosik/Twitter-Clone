@@ -1,22 +1,22 @@
-import '../styles/navbar.css'
+import { Link } from "react-router-dom";
+import { LogIn, UserPlus, House } from 'lucide-react';
+import '../styles/navbar.css';
 
-function Navbar() {
+export default function Navbar() {
   return (
     <nav className="navbar">
-      <a href="/" className="logo">Tweetter</a>
+      <Link to="/" className="logo">Tweetter</Link>
       <ul className="nav-links">
         <li>
-          <a href="/" className="nav-link">Home</a>
+          <Link to="/" className="flex nav-link gap-2"><House /> Home</Link>
         </li>
         <li>
-          <a href="/login" className="nav-link">Login</a>
+          <Link to="/login" className="flex nav-link gap-2"><LogIn /> Login</Link>
         </li>
         <li>
-          <a href="/register" className="nav-link">Register</a>
+          <Link to="/register" className="flex nav-link gap-2"><UserPlus /> Register</Link>
         </li>
       </ul>
     </nav>
   );
-};
-
-export default Navbar;
+}
