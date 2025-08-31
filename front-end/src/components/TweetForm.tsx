@@ -1,11 +1,11 @@
 import { useState} from 'react';
 import { Send } from 'lucide-react';
-import { useTweetStore } from '../store/TweetStore.ts';
+import { useTweetsStore } from '../store/TweetStore.ts';
 import '../styles/tweetform.css'
 
 export function TweetForm() {
   const [tweetInput, setTweetInput] = useState('');
-  const { addTweet } = useTweetStore();
+  const { addTweet } = useTweetsStore();
 
   const handleAddTweet = () => {
     if (tweetInput.trim()) {

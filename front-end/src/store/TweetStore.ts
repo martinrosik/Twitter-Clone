@@ -1,32 +1,36 @@
 import { create } from "zustand";
+import type { Tweet } from "../utils/tweets.api";
+import { fetchTweets, createTweet, deleteTweet } from "../utils/tweets.api";
 
-export interface Tweet {
-  id: number;
-  content: string;
-}
-
-interface TweetStore {
+interface TweetsState {
   tweets: Tweet[];
-  addTweet: (content: string) => void;
-  deleteTweet: (id: number) => void;
-  loadTweets: () => void;
+  loading: boolean;
+  loadTweets: () => Promise<void>;
+  addTweet: (content: string) => Promise<void>;
+  deleteTweet: (id: number) => Promise<void>;
 }
 
-export const useTweetStore = create<TweetStore>((set, get) => ({
+export const useTweetsStore = create<TweetsState>((set) => ({
   tweets: [],
-  addTweet: (content: string) => {
-    const newTweet: Tweet = { id: Date.now(), content };
-    const newTweets = [newTweet, ...get().tweets];
-    set({ tweets: newTweets });
-    localStorage.setItem('tweets', JSON.stringify(newTweets));
+  loading: false,
+
+  loadTweets: async () => {
+    set({ loading: true });
+    try {
+      const data = await fetchTweets();
+      set({ tweets: data });
+    } finally {
+      set({ loading: false });
+    }
   },
-  deleteTweet: (id: number) => {
-    const newTweets = get().tweets.filter((tweet) => tweet.id !== id);
-    set({ tweets: newTweets });
-    localStorage.setItem('tweets', JSON.stringify(newTweets));
+
+  addTweet: async (content: string) => {
+    const newTweet = await createTweet(content);
+    set((state) => ({ tweets: [...state.tweets, newTweet] }));
   },
-  loadTweets: () => {
-    const stored: Tweet[] = JSON.parse(localStorage.getItem('tweets') || '[]');
-    set({ tweets: stored });
+
+  deleteTweet: async (id: number) => {
+    await deleteTweet(id);
+    set((state) => ({ tweets: state.tweets.filter((t) => t.id !== id) }));
   },
 }));

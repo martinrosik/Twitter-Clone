@@ -1,9 +1,5 @@
 import { Injectable } from '@nestjs/common';
-
-interface Tweet {
-  id: number;
-  content: string;
-}
+import { Tweet } from './tweet.model';
 
 @Injectable()
 export class TweetsService {

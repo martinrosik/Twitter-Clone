@@ -1,10 +1,10 @@
 import { useEffect } from 'react';
 import { Trash2 } from 'lucide-react';
-import { useTweetStore } from '../store/TweetStore.ts';
+import { useTweetsStore } from '../store/TweetStore.ts';
 import '../styles/tweetlist.css'
 
 export function TweetList() {
-  const { tweets, deleteTweet, loadTweets } = useTweetStore();
+  const { tweets, deleteTweet, loadTweets } = useTweetsStore();
 
   useEffect(() => {
     loadTweets();
