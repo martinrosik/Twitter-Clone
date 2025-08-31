@@ -1,12 +1,20 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
-import { LogIn, UserPlus, House } from 'lucide-react';
+import { LogIn, UserPlus, House, Menu, X } from 'lucide-react';
 import '../styles/navbar.css';
 
 export default function Navbar() {
+  const [isOpen, setIsOpen] = useState(false);
+
   return (
     <nav className="navbar">
       <Link to="/" className="logo">Tweetter</Link>
-      <ul className="nav-links">
+
+      <div className="hamburger md:hidden" onClick={() => setIsOpen(!isOpen)}>
+        {isOpen ? <X /> : <Menu />}
+      </div>
+
+      <ul className={`nav-links ${isOpen ? 'open' : ''} md:flex`}>
         <li>
           <Link to="/" className="flex nav-link gap-2"><House /> Home</Link>
         </li>

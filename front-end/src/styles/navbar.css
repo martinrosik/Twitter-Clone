@@ -1,7 +1,7 @@
 @import 'tailwindcss';
 
 .navbar {
-  @apply bg-white shadow-md px-6 py-4 flex justify-between items-center mb-10;
+  @apply bg-white shadow-md px-6 py-4 flex justify-between items-center mb-10 relative;
 }
 
 .logo {
@@ -9,9 +9,25 @@
 }
 
 .nav-links {
-  @apply flex space-x-6;
+  @apply hidden md:flex space-x-6;
 }
 
 .nav-link {
-  @apply hover:text-blue-500  focus:ring-2 focus:ring-blue-500 px-2 py-1 rounded;
+  @apply hover:text-blue-500 focus:ring-2 focus:ring-blue-500 px-2 py-1 rounded;
+}
+
+.hamburger {
+  @apply block md:hidden cursor-pointer text-2xl;
+}
+
+@media (max-width: 768px) {
+  .nav-links {
+    @apply flex flex-col absolute top-full left-0 w-full bg-white shadow-md overflow-hidden max-h-0 transition-all duration-300;
+  }
+  .nav-links.open {
+    @apply max-h-60;
+  }
+  .nav-links li {
+    @apply w-full text-center py-2 border-b last:border-b-0;
+  }
 }
