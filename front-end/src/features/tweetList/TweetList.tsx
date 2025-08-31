@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
-import { Trash2 } from 'lucide-react';
-import { useTweetsStore } from '../store/TweetStore';
-import '../styles/tweetlist.css';
+import { useTweetsStore } from './TweetStore';
+import { TweetItem } from '../tweetItem/tweetItem';
+import './tweetList.css';
 
 export function TweetList() {
   const { data: tweets, loading, error, loadTweets, deleteTweet } = useTweetsStore();
@@ -24,20 +24,15 @@ export function TweetList() {
         </div>
       )}
 
-      {!loading && !error && tweets.map((tweet) => (
-        <div key={tweet.id} className="tweet-item">
-          <div className="tweet-item-header">
-            <p className="tweet-content">{tweet.content}</p>
-            <button
-              onClick={() => deleteTweet(tweet.id)}
-              className="tweet-delete-button"
-              title="Zmazať tweet"
-            >
-              <Trash2 size={16} />
-            </button>
-          </div>
-        </div>
-      ))}
+      {!loading && !error &&
+        tweets.map((tweet) => (
+          <TweetItem
+            key={tweet.id}
+            id={tweet.id}
+            content={tweet.content}
+            onDelete={deleteTweet}
+          />
+        ))}
     </div>
   );
 }

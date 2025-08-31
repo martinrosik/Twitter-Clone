@@ -16,24 +16,6 @@
   @apply text-gray-500;
 }
 
-.tweet-item {
-  @apply bg-white rounded-xl border border-gray-200 p-6 shadow-sm 
-         hover:shadow-md transition-shadow;
-}
-
-.tweet-item-header {
-  @apply flex justify-between items-start;
-}
-
-.tweet-content {
-  @apply text-gray-900 leading-relaxed whitespace-pre-wrap;
-}
-
-.tweet-delete-button {
-  @apply ml-4 text-gray-400 hover:text-red-500 hover:bg-red-50 cursor-pointer
-         p-2 rounded-full transition-colors;
-}
-
 .tweet-error {
   @apply text-red-600 font-semibold text-center bg-red-50 rounded-md p-4;
 }

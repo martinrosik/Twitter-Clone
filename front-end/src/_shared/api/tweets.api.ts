@@ -1,4 +1,4 @@
-import api from "./axios";
+import api from "../api/axios";
 
 export interface Tweet {
   id: number;
@@ -17,4 +17,4 @@ export const createTweet = async (content: string): Promise<Tweet> => {
 
 export const deleteTweet = async (id: number): Promise<void> => {
   await api.delete(`/tweets/${id}`);
-};
+};  

@@ -1,9 +1,9 @@
 import { useState} from 'react';
 import { Send } from 'lucide-react';
-import { useTweetsStore } from '../store/TweetStore.ts';
-import '../styles/tweetform.css'
+import { useTweetsStore } from '../tweetList/TweetStore.ts';
+import './tweetAdd.css'
 
-export function TweetForm() {
+export function TweetAdd() {
   const [tweetInput, setTweetInput] = useState('');
   const { addTweet } = useTweetsStore();
 

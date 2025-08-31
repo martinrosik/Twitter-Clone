@@ -1,6 +1,6 @@
 import { create } from "zustand";
-import type { Tweet } from "../utils/tweets.api";
-import { fetchTweets, createTweet, deleteTweet } from "../utils/tweets.api";
+import type { Tweet } from "../../_shared/api/tweets.api";
+import { fetchTweets, createTweet, deleteTweet } from "../../_shared/api/tweets.api";
 
 interface TweetsState {
   data: Tweet[];

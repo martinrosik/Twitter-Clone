@@ -1,9 +1,9 @@
 import { BrowserRouter as Router, Routes, Route, Outlet } from "react-router-dom";
-import Navbar from "./components/Navbar";
-import HomePage from "./pages/HomePage";
-import LoginPage from "./pages/LoginPage";
-import RegisterPage from "./pages/RegisterPage";
-import NotFoundPage from "./pages/NotFoundPage";
+import Navbar from "./features/navbar/Navbar";
+import HomePage from "./features/home/HomePage";
+import LoginPage from "./features/login/LoginPage";
+import RegisterPage from "./features/register/RegisterPage";
+import NotFoundPage from "./features/notfoundpage/NotFoundPage";
 
 function MainLayout() {
   return (
