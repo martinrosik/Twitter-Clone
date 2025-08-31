@@ -1,5 +1,5 @@
-import { TweetForm } from '../components/TweetForm';
-import { TweetList } from '../components/TweetList';
+import { TweetForm } from './TweetForm';
+import { TweetList } from './TweetList';
 
 export default function TweetComponent() {
   return (

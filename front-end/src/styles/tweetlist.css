@@ -33,3 +33,11 @@
   @apply ml-4 text-gray-400 hover:text-red-500 hover:bg-red-50 cursor-pointer
          p-2 rounded-full transition-colors;
 }
+
+.tweet-error {
+  @apply text-red-600 font-semibold text-center bg-red-50 rounded-md p-4;
+}
+
+.tweet-loading {
+  @apply text-blue-600 font-medium text-center bg-blue-50 rounded-md p-4;
+}

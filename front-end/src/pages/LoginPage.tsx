@@ -1,41 +1,25 @@
+import '../styles/loginpage.css';
+
+
 export default function LoginPage() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gray-100">
-      <div className="w-full max-w-sm rounded-2xl bg-white p-6 shadow-lg">
-        <h2 className="mb-6 text-center text-2xl font-bold text-gray-800">
-          Login
-        </h2>
-        <form className="space-y-4">
-          <div>
-            <label className="block text-sm font-medium text-gray-700">
-              Email
-            </label>
-            <input
-              type="email"
-              className="mt-1 w-full rounded-lg border border-gray-300 p-2 focus:border-blue-500 focus:ring-2 focus:ring-blue-500"
-              placeholder="Enter your email"
-            />
+    <div className="login-container">
+      <div className="login-card">
+        <h2 className="login-title">Login</h2>
+        <form className="login-form">
+          <div className="form-group">
+            <label className="form-label">Email</label>
+            <input type="email" className="form-input" placeholder="Enter your email" />
           </div>
 
-          <div>
-            <label className="block text-sm font-medium text-gray-700">
-              Password
-            </label>
-            <input
-              type="password"
-              className="mt-1 w-full rounded-lg border border-gray-300 p-2 focus:border-blue-500 focus:ring-2 focus:ring-blue-500"
-              placeholder="Enter your password"
-            />
+          <div className="form-group">
+            <label className="form-label">Password</label>
+            <input type="password" className="form-input" placeholder="Enter your password" />
           </div>
 
-          <button
-            type="submit"
-            className="w-full rounded-lg bg-blue-500 py-2 font-semibold text-white hover:bg-blue-600 transition"
-          >
-            Login
-          </button>
+          <button type="submit" className="login-button">Login</button>
         </form>
       </div>
     </div>
-  )
+  );
 }

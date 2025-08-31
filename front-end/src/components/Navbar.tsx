@@ -10,19 +10,19 @@ export default function Navbar() {
     <nav className="navbar">
       <Link to="/" className="logo">Tweetter</Link>
 
-      <div className="hamburger md:hidden" onClick={() => setIsOpen(!isOpen)}>
+      <div className="hamburger" onClick={() => setIsOpen(!isOpen)}>
         {isOpen ? <X /> : <Menu />}
       </div>
 
-      <ul className={`nav-links ${isOpen ? 'open' : ''} md:flex`}>
+      <ul className={`nav-links ${isOpen ? 'open' : ''}`}>
         <li>
-          <Link to="/" className="flex nav-link gap-2"><House /> Home</Link>
+          <Link to="/" className="nav-link"><House /> Home</Link>
         </li>
         <li>
-          <Link to="/login" className="flex nav-link gap-2"><LogIn /> Login</Link>
+          <Link to="/login" className="nav-link"><LogIn /> Login</Link>
         </li>
         <li>
-          <Link to="/register" className="flex nav-link gap-2"><UserPlus /> Register</Link>
+          <Link to="/register" className="nav-link"><UserPlus /> Register</Link>
         </li>
       </ul>
     </nav>

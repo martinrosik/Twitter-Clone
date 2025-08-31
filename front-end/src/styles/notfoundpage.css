@@ -1,0 +1,13 @@
+@import 'tailwindcss';
+
+.notfound-container {
+  @apply flex flex-col items-center justify-center min-h-screen bg-gray-100 text-gray-800;
+}
+
+.notfound-title {
+  @apply text-6xl font-bold mb-4;
+}
+
+.notfound-message {
+  @apply text-xl mb-6;
+}
