@@ -3,34 +3,52 @@ import type { Tweet } from "../utils/tweets.api";
 import { fetchTweets, createTweet, deleteTweet } from "../utils/tweets.api";
 
 interface TweetsState {
-  tweets: Tweet[];
+  data: Tweet[];
   loading: boolean;
+  error: string | null;
   loadTweets: () => Promise<void>;
   addTweet: (content: string) => Promise<void>;
   deleteTweet: (id: number) => Promise<void>;
 }
 
 export const useTweetsStore = create<TweetsState>((set) => ({
-  tweets: [],
+  data: [],
   loading: false,
+  error: null,
 
   loadTweets: async () => {
-    set({ loading: true });
+    set({ loading: true, error: null });
     try {
-      const data = await fetchTweets();
-      set({ tweets: data });
+      const tweets = await fetchTweets();
+      set({ data: tweets });
+    } catch (err: any) {
+      set({ error: "Nepodarilo sa načítať tweety. Skúste znova." });
     } finally {
       set({ loading: false });
     }
   },
 
   addTweet: async (content: string) => {
-    const newTweet = await createTweet(content);
-    set((state) => ({ tweets: [...state.tweets, newTweet] }));
+    set({ loading: true, error: null });
+    try {
+      const newTweet = await createTweet(content);
+      set((state) => ({ data: [...state.data, newTweet] }));
+    } catch (err: any) {
+      set({ error: "Nepodarilo sa pridať tweet. Skúste znova." });
+    } finally {
+      set({ loading: false });
+    }
   },
 
   deleteTweet: async (id: number) => {
-    await deleteTweet(id);
-    set((state) => ({ tweets: state.tweets.filter((t) => t.id !== id) }));
+    set({ loading: true, error: null });
+    try {
+      await deleteTweet(id);
+      set((state) => ({ data: state.data.filter((t) => t.id !== id) }));
+    } catch (err: any) {
+      set({ error: "Nepodarilo sa zmazať tweet. Skúste znova." });
+    } finally {
+      set({ loading: false });
+    }
   },
 }));

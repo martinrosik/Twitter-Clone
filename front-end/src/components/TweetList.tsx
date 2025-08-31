@@ -1,27 +1,13 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { Trash2 } from 'lucide-react';
-import { useTweetsStore } from '../store/TweetStore.ts';
+import { useTweetsStore } from '../store/TweetStore';
 import '../styles/tweetlist.css';
 
 export function TweetList() {
-  const { tweets, deleteTweet, loadTweets } = useTweetsStore();
-  const [error, setError] = useState<string | null>(null);
-  const [loading, setLoading] = useState(false);
+  const { data: tweets, loading, error, loadTweets, deleteTweet } = useTweetsStore();
 
   useEffect(() => {
-    const fetchTweets = async () => {
-      setLoading(true);
-      setError(null);
-      try {
-        await loadTweets();
-      } catch (err) {
-        setError('Nepodarilo sa načítať tweety. Skúste znova.');
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchTweets();
+    loadTweets();
   }, [loadTweets]);
 
   return (
