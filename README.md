@@ -5,9 +5,6 @@ A simple **Twitter-like app** built with modern web technologies where users can
 ## ⚡ Tech Stack
 
 * ⚛️ **React** – Frontend framework
-* 🎨 **TailwindCSS** – Styling
-* 🐻 **Zustand** – State management
-* 🌐 **Axios** – API requests
 * 🛡️ **NestJS** – Backend framework
 
 ---
@@ -22,38 +19,13 @@ A simple **Twitter-like app** built with modern web technologies where users can
 
 ---
 
-## 📂 Project Structure
-
-```
-/frontend
-  ├── src/
-  │   ├── components/
-  │   │   ├── TweetForm.tsx
-  │   │   └── TweetList.tsx
-  │   ├── store/
-  │   │   └── TweetStore.ts
-  │   └── styles/
-  │       ├── tweetform.css
-  │       └── tweetlist.css
-
-/backend
-  ├── src/
-  │   ├── tweets/
-  │   │   ├── tweets.controller.ts
-  │   │   ├── tweets.service.ts
-  │   │   └── tweet.model.ts
-  │   └── main.ts
-```
-
----
-
 ## 🚀 Getting Started
 
 ### 1️⃣ Clone the repository
 
 ```bash
-git clone https://github.com/yourusername/twitter-clone.git
-cd twitter-clone
+git clone https://github.com/martinrosik/Twitter-Clone.git
+cd Twitter-Clone
 ```
 
 ### 2️⃣ Install dependencies
@@ -85,32 +57,3 @@ npm run start:dev
 ```bash
 npm run dev
 ```
-
----
-
-## 📬 API Endpoints
-
-* `GET /tweets` → Get all tweets
-* `POST /tweets` → Create a new tweet
-* `DELETE /tweets/:id` → Delete a tweet
-
----
-
-## 🎯 Future Improvements
-
-* 🧑‍🤝‍🧑 User authentication
-* ❤️ Like button
-* 💬 Comments
-* 📱 Responsive design improvements
-
----
-
-## 🤝 Contributing
-
-Pull requests are welcome! 🚀 If you have ideas or find bugs, open an issue.
-
----
-
-## 📝 License
-
-MIT License © 2025
