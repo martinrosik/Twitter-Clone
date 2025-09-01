@@ -5,7 +5,7 @@ import api from "../../../_shared/api/axios";
 import "./tweetList.css";
 
 interface Tweet {
-  id: number;
+  _id: string;
   content: string;
 }
 
@@ -31,8 +31,8 @@ export function TweetList() {
     setTweets((prev) => [tweet, ...prev]);
   };
 
-  const handleDeleteTweet = (id: number) => {
-    setTweets((prev) => prev.filter((t) => t.id !== id));
+  const handleDeleteTweet = (id: string) => {
+    setTweets((prev) => prev.filter((t) => t._id !== id));
   };
 
   useEffect(() => {
@@ -53,8 +53,8 @@ export function TweetList() {
 
       {tweets.map((tweet) => (
         <TweetItem
-          key={tweet.id}
-          id={tweet.id}
+          key={tweet._id}
+          id={tweet._id}      
           content={tweet.content}
           onDelete={handleDeleteTweet}
         />

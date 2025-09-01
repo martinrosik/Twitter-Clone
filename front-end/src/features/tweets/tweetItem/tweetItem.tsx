@@ -4,9 +4,9 @@ import api from "../../../_shared/api/axios";
 import "./tweetItem.css";
 
 interface TweetItemProps {
-  id: number;
+  id: string;
   content: string;
-  onDelete: (id: number) => void;
+  onDelete: (id: string) => void;
 }
 
 export function TweetItem({ id, content, onDelete }: TweetItemProps) {

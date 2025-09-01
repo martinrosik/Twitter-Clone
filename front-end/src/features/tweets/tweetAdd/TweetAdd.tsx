@@ -4,7 +4,7 @@ import api from "../../../_shared/api/axios";
 import "./tweetAdd.css";
 
 interface Tweet {
-  id: number;
+  _id: string;
   content: string;
 }
 
@@ -39,6 +39,8 @@ export function TweetAdd({ onAdd }: TweetAddProps) {
       <h2 className="tweet-title">Napíš tweet</h2>
       <div className="tweet-form">
         <textarea
+          id="tweet-content"
+          name="tweetContent"       
           value={tweetInput}
           onChange={(e) => setTweetInput(e.target.value)}
           placeholder="Čo máš na mysli?"
