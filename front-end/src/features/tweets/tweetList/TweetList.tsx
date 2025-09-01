@@ -1,0 +1,64 @@
+import { useEffect, useState } from "react";
+import { TweetItem } from "../tweetItem/tweetItem";
+import { TweetAdd } from "../tweetAdd/TweetAdd";
+import api from "../../../_shared/api/axios";
+import "./tweetList.css";
+
+interface Tweet {
+  id: number;
+  content: string;
+}
+
+export function TweetList() {
+  const [tweets, setTweets] = useState<Tweet[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const fetchTweets = async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const res = await api.get<Tweet[]>("/tweets");
+      setTweets(res.data);
+    } catch {
+      setError("Nepodarilo sa načítať tweety.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleAddTweet = (tweet: Tweet) => {
+    setTweets((prev) => [tweet, ...prev]);
+  };
+
+  const handleDeleteTweet = (id: number) => {
+    setTweets((prev) => prev.filter((t) => t.id !== id));
+  };
+
+  useEffect(() => {
+    fetchTweets();
+  }, []);
+
+  return (
+    <div className="tweet-list">
+      <TweetAdd onAdd={handleAddTweet} />
+
+      <h2 className="tweet-list-title">Tweety ({tweets.length})</h2>
+
+      {loading && <p className="tweet-loading">Načítavam...</p>}
+      {error && <p className="tweet-error">{error}</p>}
+      {!loading && !error && tweets.length === 0 && (
+        <p className="tweet-empty-text">Zatiaľ žiadne tweety.</p>
+      )}
+
+      {tweets.map((tweet) => (
+        <TweetItem
+          key={tweet.id}
+          id={tweet.id}
+          content={tweet.content}
+          onDelete={handleDeleteTweet}
+        />
+      ))}
+    </div>
+  );
+}
