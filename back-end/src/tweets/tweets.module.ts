@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { TweetsService } from './tweets.service';
 import { TweetsController } from './tweets.controller';
-import { Tweet, TweetSchema } from './entities/tweet.entity';
+import { Tweet, TweetDocument, TweetSchema } from './tweets.schema';
 
 @Module({
   imports: [

@@ -7,12 +7,14 @@ import "./tweetList.css";
 interface Tweet {
   _id: string;
   content: string;
+  userId: string;
 }
 
 export function TweetList() {
   const [tweets, setTweets] = useState<Tweet[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [currentUserId, setCurrentUserId] = useState<string | null>(null);
 
   const fetchTweets = async () => {
     setLoading(true);
@@ -36,6 +38,15 @@ export function TweetList() {
   };
 
   useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      try {
+        const payload = JSON.parse(atob(token.split('.')[1]));
+        setCurrentUserId(payload.sub);
+      } catch {
+        setCurrentUserId(null);
+      }
+    }
     fetchTweets();
   }, []);
 
@@ -54,8 +65,10 @@ export function TweetList() {
       {tweets.map((tweet) => (
         <TweetItem
           key={tweet._id}
-          id={tweet._id}      
+          id={tweet._id}
           content={tweet.content}
+          userId={tweet.userId}
+          currentUserId={currentUserId}
           onDelete={handleDeleteTweet}
         />
       ))}

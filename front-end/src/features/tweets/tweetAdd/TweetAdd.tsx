@@ -6,6 +6,7 @@ import "./tweetAdd.css";
 interface Tweet {
   _id: string;
   content: string;
+  userId: string;
 }
 
 interface TweetAddProps {
@@ -23,6 +24,7 @@ export function TweetAdd({ onAdd }: TweetAddProps) {
 
     setLoading(true);
     setError(null);
+
     try {
       const res = await api.post<Tweet>("/tweets", { content });
       onAdd(res.data);

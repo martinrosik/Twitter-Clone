@@ -8,19 +8,28 @@ export default function LoginPage() {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [success, setSuccess] = useState<string | null>(null);
   const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
     setError(null);
+    setSuccess(null);
 
     try {
       const res = await api.post("/auth/login", { email, password });
       localStorage.setItem("token", res.data.token);
-      navigate("/"); 
+      setSuccess("Login successful! Redirecting...");
+      setTimeout(() => navigate("/"), 1000);
     } catch (err: any) {
-      setError(err.response?.data?.message || "Invalid email or password");
+      if (err.response?.status === 401) {
+        setError("Incorrect email or password. Please try again.");
+      } else if (err.response?.status === 500) {
+        setError("Server error. Please try again later.");
+      } else {
+        setError("An unexpected error occurred. Please try again.");
+      }
     } finally {
       setLoading(false);
     }
@@ -61,6 +70,7 @@ export default function LoginPage() {
           </button>
 
           {error && <p className="login-error">{error}</p>}
+          {success && <p className="login-success">{success}</p>}
         </form>
       </div>
     </div>

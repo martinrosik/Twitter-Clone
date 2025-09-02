@@ -6,10 +6,12 @@ import "./tweetItem.css";
 interface TweetItemProps {
   id: string;
   content: string;
+  userId: string;     
+  currentUserId: string | null;
   onDelete: (id: string) => void;
 }
 
-export function TweetItem({ id, content, onDelete }: TweetItemProps) {
+export function TweetItem({ id, content, userId, currentUserId, onDelete }: TweetItemProps) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -26,18 +28,22 @@ export function TweetItem({ id, content, onDelete }: TweetItemProps) {
     }
   };
 
+  const canDelete = userId === currentUserId;
+
   return (
     <div className="tweet-item">
       <div className="tweet-item-header">
         <p className="tweet-content">{content}</p>
-        <button
-          onClick={deleteTweet}
-          disabled={loading}
-          className="tweet-delete-button"
-          title="Zmazať tweet"
-        >
-          <Trash2 size={16} />
-        </button>
+        {canDelete && (
+          <button
+            onClick={deleteTweet}
+            disabled={loading}
+            className="tweet-delete-button"
+            title="Zmazať tweet"
+          >
+            <Trash2 size={16} />
+          </button>
+        )}
       </div>
       {error && <p className="tweet-error">{error}</p>}
     </div>

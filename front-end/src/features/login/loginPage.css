@@ -33,9 +33,9 @@
 }
 
 .login-error {
-  @apply mt-3 text-sm text-red-600;
+  @apply mt-3 text-sm text-red-700 font-medium bg-red-100 p-2 rounded;
 }
 
 .login-success {
-  @apply mt-3 text-sm text-green-600;
+  @apply mt-3 text-sm text-green-700 font-medium bg-green-100 p-2 rounded;
 }
