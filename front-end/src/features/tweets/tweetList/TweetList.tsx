@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react";
+import { useState, useEffect, useContext } from "react";
 import { TweetItem } from "../tweetItem/tweetItem";
 import { TweetAdd } from "../tweetAdd/TweetAdd";
 import api from "../../../_shared/api/axios";
+import { AuthContext } from "../../../_shared/context/AuthContext";
 import "./tweetList.css";
 
 interface Tweet {
@@ -14,7 +15,7 @@ export function TweetList() {
   const [tweets, setTweets] = useState<Tweet[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [currentUserId, setCurrentUserId] = useState<string | null>(null);
+  const { userId: currentUserId } = useContext(AuthContext);
 
   const fetchTweets = async () => {
     setLoading(true);
@@ -38,15 +39,6 @@ export function TweetList() {
   };
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      try {
-        const payload = JSON.parse(atob(token.split('.')[1]));
-        setCurrentUserId(payload.sub);
-      } catch {
-        setCurrentUserId(null);
-      }
-    }
     fetchTweets();
   }, []);
 

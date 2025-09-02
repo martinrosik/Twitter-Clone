@@ -5,7 +5,7 @@
 }
 
 .logo {
-  @apply text-3xl font-bold text-blue-600;
+  @apply text-3xl font-bold text-blue-600 hover:text-blue-700;
 }
 
 .nav-links {
@@ -21,7 +21,7 @@
 }
 
 .nav-link.logout-button {
-  @apply bg-red-500 text-white px-3 py-1 rounded transition duration-200 cursor-pointer hover:bg-red-600 hover:shadow-md;
+  @apply bg-blue-600 text-white px-3 py-1 rounded transition duration-200 cursor-pointer hover:bg-blue-700 hover:shadow-md;
 }
 
 .hamburger {

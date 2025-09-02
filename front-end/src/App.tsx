@@ -1,4 +1,5 @@
 import { BrowserRouter as Router, Routes, Route, Outlet } from "react-router-dom";
+import { AuthProvider } from "./_shared/context/AuthContext";
 import Navbar from "./features/navbar/Navbar";
 import HomePage from "./features/home/HomePage";
 import LoginPage from "./features/login/LoginPage";
@@ -20,19 +21,21 @@ function AuthLayout() {
 
 export default function App() {
   return (
-    <Router>
-      <Routes>
-        <Route element={<MainLayout />}>
-          <Route path="/" element={<HomePage />} />
-        </Route>
+    <AuthProvider>
+      <Router>
+        <Routes>
+          <Route element={<MainLayout />}>
+            <Route path="/" element={<HomePage />} />
+          </Route>
 
-        <Route element={<AuthLayout />}>
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/register" element={<RegisterPage />} />
-        </Route>
+          <Route element={<AuthLayout />}>
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/register" element={<RegisterPage />} />
+          </Route>
 
-        <Route path="*" element={<NotFoundPage />} />
-      </Routes>
-    </Router>
+          <Route path="*" element={<NotFoundPage />} />
+        </Routes>
+      </Router>
+    </AuthProvider>
   );
 }

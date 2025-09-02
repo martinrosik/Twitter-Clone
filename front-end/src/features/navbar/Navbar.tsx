@@ -1,30 +1,16 @@
-import { useState, useEffect } from "react";
+import { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { LogIn, UserPlus, House, Menu, X, User } from 'lucide-react';
+import { AuthContext } from "../../_shared/context/AuthContext";
 import './navbar.css';
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
-  const [username, setUsername] = useState<string | null>(null);
-
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      try {
-        const payload = JSON.parse(atob(token.split('.')[1]));
-        setUsername(payload.username || payload.email || "User");
-      } catch {
-        setUsername("User");
-      }
-    }
-  }, []);
-
-
+  const { username, logout } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    localStorage.removeItem("token");
-    setUsername(null);
+    logout();
     navigate("/");
   };
 

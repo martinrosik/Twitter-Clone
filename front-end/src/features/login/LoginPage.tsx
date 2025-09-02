@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../../_shared/api/axios";
+import { AuthContext } from "../../_shared/context/AuthContext";
 import "./loginPage.css";
 
 export default function LoginPage() {
@@ -10,6 +11,15 @@ export default function LoginPage() {
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
   const navigate = useNavigate();
+  const { setAuth } = useContext(AuthContext);
+
+  const parseJWT = (token: string) => {
+    try {
+      return JSON.parse(atob(token.split(".")[1]));
+    } catch {
+      return null;
+    }
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -19,7 +29,14 @@ export default function LoginPage() {
 
     try {
       const res = await api.post("/auth/login", { email, password });
-      localStorage.setItem("token", res.data.token);
+      const token = res.data.token;
+      localStorage.setItem("token", token);
+
+      const payload = parseJWT(token);
+      if (payload) {
+        setAuth(payload.sub, payload.username || payload.email || "User");
+      }
+
       setSuccess("Login successful! Redirecting...");
       setTimeout(() => navigate("/"), 1000);
     } catch (err: any) {
