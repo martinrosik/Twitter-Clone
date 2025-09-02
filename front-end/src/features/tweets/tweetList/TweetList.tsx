@@ -42,16 +42,13 @@ export function TweetList() {
     fetchTweets();
   }, []);
 
-  // Split tweets into two groups
   const yourTweets = tweets.filter((t) => t.userId === currentUserId);
   const otherTweets = tweets.filter((t) => t.userId !== currentUserId);
 
   return (
     <div className="tweet-list">
       <TweetAdd onAdd={handleAddTweet} />
-
       <h2 className="tweet-list-title">Tweety ({tweets.length})</h2>
-
       {loading && <p className="tweet-loading">Načítavam...</p>}
       {error && <p className="tweet-error">{error}</p>}
       {!loading && !error && tweets.length === 0 && (
@@ -60,7 +57,7 @@ export function TweetList() {
 
       {yourTweets.length > 0 && (
         <>
-          <h3 className="tweet-section-title">Your Tweets</h3>
+          {currentUserId && <h3 className="tweet-section-title">Your Tweets</h3>}
           {yourTweets.map((tweet) => (
             <TweetItem
               key={tweet._id}
@@ -76,7 +73,7 @@ export function TweetList() {
 
       {otherTweets.length > 0 && (
         <>
-          <h3 className="tweet-section-title">Other Tweets</h3>
+          {currentUserId && <h3 className="tweet-section-title">Other Tweets</h3>}
           {otherTweets.map((tweet) => (
             <TweetItem
               key={tweet._id}
