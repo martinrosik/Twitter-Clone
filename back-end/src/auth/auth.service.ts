@@ -22,7 +22,7 @@ export class AuthService {
       password: hashedPassword,
     });
 
-    const payload = { sub: user._id.toString(), email: user.email };
+    const payload = { sub: user._id.toString(), email: user.email, username: user.username };
     const token = this.jwtService.sign(payload);
 
     const safeUser = { ...user.toObject(), password: undefined };
@@ -37,7 +37,7 @@ export class AuthService {
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) throw new UnauthorizedException('Invalid credentials');
 
-    const payload = { sub: user._id.toString(), email: user.email };
+    const payload = { sub: user._id.toString(), email: user.email, username: user.username };
     const token = this.jwtService.sign(payload);
 
     const safeUser = { ...user.toObject(), password: undefined };
