@@ -42,6 +42,10 @@ export function TweetList() {
     fetchTweets();
   }, []);
 
+  // Split tweets into two groups
+  const yourTweets = tweets.filter((t) => t.userId === currentUserId);
+  const otherTweets = tweets.filter((t) => t.userId !== currentUserId);
+
   return (
     <div className="tweet-list">
       <TweetAdd onAdd={handleAddTweet} />
@@ -54,16 +58,37 @@ export function TweetList() {
         <p className="tweet-empty-text">Zatiaľ žiadne tweety.</p>
       )}
 
-      {tweets.map((tweet) => (
-        <TweetItem
-          key={tweet._id}
-          id={tweet._id}
-          content={tweet.content}
-          userId={tweet.userId}
-          currentUserId={currentUserId}
-          onDelete={handleDeleteTweet}
-        />
-      ))}
+      {yourTweets.length > 0 && (
+        <>
+          <h3 className="tweet-section-title">Your Tweets</h3>
+          {yourTweets.map((tweet) => (
+            <TweetItem
+              key={tweet._id}
+              id={tweet._id}
+              content={tweet.content}
+              userId={tweet.userId}
+              currentUserId={currentUserId}
+              onDelete={handleDeleteTweet}
+            />
+          ))}
+        </>
+      )}
+
+      {otherTweets.length > 0 && (
+        <>
+          <h3 className="tweet-section-title">Other Tweets</h3>
+          {otherTweets.map((tweet) => (
+            <TweetItem
+              key={tweet._id}
+              id={tweet._id}
+              content={tweet.content}
+              userId={tweet.userId}
+              currentUserId={currentUserId}
+              onDelete={handleDeleteTweet}
+            />
+          ))}
+        </>
+      )}
     </div>
   );
 }

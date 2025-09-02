@@ -1,25 +1,29 @@
 @import 'tailwindcss';
 
 .tweet-list {
-  @apply space-y-4;
+  @apply space-y-6 w-full max-w-4xl mx-auto p-4;
 }
 
 .tweet-list-title {
-  @apply text-xl font-bold text-gray-900;
+  @apply text-2xl font-bold text-gray-900 border-b-2 border-gray-200 pb-2 mb-4;
 }
 
 .tweet-empty {
-  @apply bg-gray-50 rounded-xl p-8 text-center;
+  @apply bg-gray-50 rounded-xl p-8 text-center shadow-sm;
 }
 
 .tweet-empty-text {
-  @apply text-gray-400 font-medium text-center bg-gray-100 rounded-md p-4;
+  @apply text-gray-500 font-medium text-center bg-gray-100 rounded-md p-6;
 }
 
 .tweet-error {
-  @apply text-red-600 font-semibold text-center bg-red-50 rounded-md p-4;
+  @apply text-red-700 font-semibold text-center bg-red-100 rounded-md p-6 shadow-inner;
 }
 
 .tweet-loading {
-  @apply text-blue-600 font-medium text-center bg-blue-50 rounded-md p-4;
+  @apply text-blue-700 font-medium text-center bg-blue-100 rounded-md p-6 shadow-inner;
+}
+
+.tweet-section-title {
+  @apply text-xl font-semibold text-blue-600 mt-6 mb-2 px-4 py-2 rounded-md bg-gray-100;
 }
