@@ -40,7 +40,15 @@ cd back-end
 npm install
 ```
 
-### 3️⃣ Run the app
+### 3️⃣ Setup MongoDB
+
+1. Install and run [MongoDB](https://www.mongodb.com/try/download/community).
+2. Make sure MongoDB is running locally (default: `mongodb://localhost:27017`).
+
+Example connection string for this project:  
+`mongodb://localhost:27017/YOUR_DATABASE_NAME`
+
+### 4️⃣ Run the app
 
 #### Start backend (NestJS)
 
