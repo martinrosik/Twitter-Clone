@@ -1,21 +1,17 @@
 # 🐦 Twitter Clone
 
-A simple **Twitter-like app** built with modern web technologies where users can ✍️ write tweets, 📜 view them, and 🗑️ delete them.
+🚀 A simple **Twitter-like** app where users can:
+* ✍️ Write tweets
+* 📜 View tweets from all users
+* 🗑️ Delete only their own tweets
+
+🔐 Authentication is included — users can register and log in, and their session is handled securely.
 
 ## ⚡ Tech Stack
 
 * ⚛️ **React** – Frontend framework
 * 🛡️ **NestJS** – Backend framework
-
----
-
-## 📸 Features
-
-* ✅ Add a tweet
-* ✅ View all tweets
-* ✅ Delete a tweet
-* ✅ State management with **Zustand**
-* ✅ Backend powered by **NestJS**
+* 🍃 **MongoDB** - Database
 
 ---
 
@@ -33,14 +29,14 @@ cd Twitter-Clone
 #### Frontend
 
 ```bash
-cd frontend
+cd front-end
 npm install
 ```
 
 #### Backend
 
 ```bash
-cd backend
+cd back-end
 npm install
 ```
 
