@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from "react";
+import { useEffect, useState, useContext } from "react";
 import { TweetItem } from "../tweetItem/tweetItem";
 import { TweetAdd } from "../tweetAdd/TweetAdd";
 import api from "../../../_shared/api/axios";
@@ -15,7 +15,7 @@ export function TweetList() {
   const [tweets, setTweets] = useState<Tweet[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const { userId: currentUserId } = useContext(AuthContext);
+  const { userId } = useContext(AuthContext);
 
   const fetchTweets = async () => {
     setLoading(true);
@@ -42,50 +42,28 @@ export function TweetList() {
     fetchTweets();
   }, []);
 
-  const yourTweets = tweets.filter((t) => t.userId === currentUserId);
-  const otherTweets = tweets.filter((t) => t.userId !== currentUserId);
-
   return (
     <div className="tweet-list">
-      <TweetAdd onAdd={handleAddTweet} />
+      {userId && <TweetAdd onAdd={handleAddTweet} />}
+
       <h2 className="tweet-list-title">Tweety ({tweets.length})</h2>
+
       {loading && <p className="tweet-loading">Načítavam...</p>}
       {error && <p className="tweet-error">{error}</p>}
       {!loading && !error && tweets.length === 0 && (
         <p className="tweet-empty-text">Zatiaľ žiadne tweety.</p>
       )}
 
-      {yourTweets.length > 0 && (
-        <>
-          {currentUserId && <h3 className="tweet-section-title">Your Tweets</h3>}
-          {yourTweets.map((tweet) => (
-            <TweetItem
-              key={tweet._id}
-              id={tweet._id}
-              content={tweet.content}
-              userId={tweet.userId}
-              currentUserId={currentUserId}
-              onDelete={handleDeleteTweet}
-            />
-          ))}
-        </>
-      )}
-
-      {otherTweets.length > 0 && (
-        <>
-          {currentUserId && <h3 className="tweet-section-title">Other Tweets</h3>}
-          {otherTweets.map((tweet) => (
-            <TweetItem
-              key={tweet._id}
-              id={tweet._id}
-              content={tweet.content}
-              userId={tweet.userId}
-              currentUserId={currentUserId}
-              onDelete={handleDeleteTweet}
-            />
-          ))}
-        </>
-      )}
+      {tweets.map((tweet) => (
+        <TweetItem
+          key={tweet._id}
+          id={tweet._id}
+          content={tweet.content}
+          userId={tweet.userId}
+          currentUserId={userId}
+          onDelete={handleDeleteTweet}
+        />
+      ))}
     </div>
   );
 }
