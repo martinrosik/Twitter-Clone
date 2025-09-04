@@ -6,7 +6,7 @@ import { Tweet, TweetDocument, TweetSchema } from './tweets.schema';
 
 @Module({
   imports: [
-    MongooseModule.forFeature([{ name: Tweet.name, schema: TweetSchema }])
+    MongooseModule.forFeature([{ name: Tweet.name, schema: TweetSchema }]),
   ],
   controllers: [TweetsController],
   providers: [TweetsService],

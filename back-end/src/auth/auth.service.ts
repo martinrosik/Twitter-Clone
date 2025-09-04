@@ -1,4 +1,8 @@
-import { Injectable, BadRequestException, UnauthorizedException } from '@nestjs/common';
+import {
+  Injectable,
+  BadRequestException,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { UsersService } from '../users/users.service';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcryptjs';
@@ -17,13 +21,17 @@ export class AuthService {
 
     const hashedPassword = await bcrypt.hash(data.password, 10);
 
-    const user: UserDocument = await this.usersService.create({
+    const user = await this.usersService.create({
       ...data,
       password: hashedPassword,
     });
 
-    const payload = { sub: user._id.toString(), email: user.email, username: user.username };
-    const token = this.jwtService.sign(payload);
+    const payload = {
+      sub: user._id.toString(),
+      email: user.email,
+      username: user.username,
+    };
+    const token = await this.jwtService.signAsync(payload);
 
     const safeUser = { ...user.toObject(), password: undefined };
 
@@ -31,14 +39,18 @@ export class AuthService {
   }
 
   async login(email: string, password: string) {
-    const user: UserDocument | null = await this.usersService.findByEmail(email);
+    const user = await this.usersService.findByEmail(email);
     if (!user) throw new UnauthorizedException('Invalid credentials');
 
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) throw new UnauthorizedException('Invalid credentials');
 
-    const payload = { sub: user._id.toString(), email: user.email, username: user.username };
-    const token = this.jwtService.sign(payload);
+    const payload = {
+      sub: user._id.toString(),
+      email: user.email,
+      username: user.username,
+    };
+    const token = await this.jwtService.signAsync(payload);
 
     const safeUser = { ...user.toObject(), password: undefined };
 

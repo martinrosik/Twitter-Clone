@@ -5,7 +5,9 @@ import { Tweet, TweetDocument } from './tweets.schema';
 
 @Injectable()
 export class TweetsService {
-  constructor(@InjectModel(Tweet.name) private tweetModel: Model<TweetDocument>) {}
+  constructor(
+    @InjectModel(Tweet.name) private tweetModel: Model<TweetDocument>,
+  ) {}
 
   async create(content: string, userId: string) {
     const tweet = new this.tweetModel({ content, userId });
@@ -13,7 +15,7 @@ export class TweetsService {
   }
 
   async findAll() {
-    return this.tweetModel.find().exec();
+    return this.tweetModel.find().sort({ createdAt: -1 }).exec();
   }
 
   async remove(tweetId: string, userId: string) {
