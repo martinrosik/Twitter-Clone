@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Send } from "lucide-react";
-import api from "../../../_shared/api/axios";
+import api from "../../_shared/api/axios";
 import "./tweetAdd.css";
 
 interface Tweet {
@@ -14,27 +14,33 @@ interface TweetAddProps {
 }
 
 export function TweetAdd({ onAdd }: TweetAddProps) {
-  const [tweetInput, setTweetInput] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  function useTweetAdd(onAdd: (tweet: Tweet) => void) {
+    const [tweetInput, setTweetInput] = useState("");
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState<string | null>(null);
 
-  const addTweet = async () => {
-    const content = tweetInput.trim();
-    if (!content) return;
+    const addTweet = async () => {
+      const content = tweetInput.trim();
+      if (!content) return;
 
-    setLoading(true);
-    setError(null);
+      setLoading(true);
+      setError(null);
 
-    try {
-      const res = await api.post<Tweet>("/tweets", { content });
-      onAdd(res.data);
-      setTweetInput("");
-    } catch {
-      setError("Nepodarilo sa pridať tweet.");
-    } finally {
-      setLoading(false);
-    }
-  };
+      try {
+        const res = await api.post<Tweet>("/tweets", { content });
+        onAdd(res.data);
+        setTweetInput("");
+      } catch {
+        setError("Nepodarilo sa pridať tweet.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    return { tweetInput, setTweetInput, addTweet, loading, error };
+  }
+
+  const { tweetInput, setTweetInput, addTweet, loading, error } = useTweetAdd(onAdd);
 
   return (
     <div className="tweet-box">
@@ -42,7 +48,7 @@ export function TweetAdd({ onAdd }: TweetAddProps) {
       <div className="tweet-form">
         <textarea
           id="tweet-content"
-          name="tweetContent"       
+          name="tweetContent"
           value={tweetInput}
           onChange={(e) => setTweetInput(e.target.value)}
           placeholder="Čo máš na mysli?"

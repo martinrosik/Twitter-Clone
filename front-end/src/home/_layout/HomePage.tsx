@@ -1,5 +1,5 @@
-import { TweetList } from "../tweets/tweetList/TweetList";
-import './homePage.css';
+import { TweetList } from "../../tweets/list/TweetList";
+import '../homePage.css';
 
 export default function HomePage() {
   return (

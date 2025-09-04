@@ -1,17 +1,15 @@
-import { useState, useContext } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../../_shared/api/axios";
-import { AuthContext } from "../../_shared/context/AuthContext";
+import { useAuthStore } from "../../_shared/store/useAuthStore";
 import "./loginPage.css";
 
-export default function LoginPage() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+function useLogin() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
   const navigate = useNavigate();
-  const { setAuth } = useContext(AuthContext);
+  const { setAuth } = useAuthStore();
 
   const parseJWT = (token: string) => {
     try {
@@ -21,8 +19,7 @@ export default function LoginPage() {
     }
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const login = async (email: string, password: string) => {
     setLoading(true);
     setError(null);
     setSuccess(null);
@@ -52,6 +49,19 @@ export default function LoginPage() {
     }
   };
 
+  return { login, loading, error, success };
+}
+
+export default function LoginPage() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const { login, loading, error, success } = useLogin();
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    login(email, password);
+  };
+
   return (
     <div className="login-container">
       <div className="login-card">
@@ -62,7 +72,6 @@ export default function LoginPage() {
             <input
               type="email"
               className="form-input"
-              placeholder="Enter your email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
@@ -75,7 +84,6 @@ export default function LoginPage() {
             <input
               type="password"
               className="form-input"
-              placeholder="Enter your password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required

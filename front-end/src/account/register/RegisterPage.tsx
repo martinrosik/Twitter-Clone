@@ -3,35 +3,25 @@ import { useNavigate } from "react-router-dom";
 import api from "../../_shared/api/axios";
 import "./registerPage.css";
 
-export default function RegisterPage() {
-  const [form, setForm] = useState({ name: "", email: "", password: "" });
+function useRegister() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
   const navigate = useNavigate();
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
-    if (error) setError(null);
-    if (success) setSuccess(null);
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const register = async (name: string, email: string, password: string) => {
     setLoading(true);
     setError(null);
     setSuccess(null);
 
     try {
       await api.post("/auth/register", {
-        username: form.name,
-        email: form.email,
-        password: form.password,
+        username: name,
+        email,
+        password,
       });
 
       setSuccess("Account created successfully! Redirecting to login...");
-      setForm({ name: "", email: "", password: "" });
-
       setTimeout(() => navigate("/login"), 1500);
     } catch (err: any) {
       if (err.response?.status === 400) {
@@ -46,6 +36,22 @@ export default function RegisterPage() {
     }
   };
 
+  return { register, loading, error, success };
+}
+
+export default function RegisterPage() {
+  const [form, setForm] = useState({ name: "", email: "", password: "" });
+  const { register, loading, error, success } = useRegister();
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    register(form.name, form.email, form.password);
+  };
+
   return (
     <div className="register-container">
       <div className="register-card">
@@ -57,7 +63,6 @@ export default function RegisterPage() {
               type="text"
               name="name"
               className="form-input"
-              placeholder="Enter your name"
               value={form.name}
               onChange={handleChange}
               required
@@ -71,7 +76,6 @@ export default function RegisterPage() {
               type="email"
               name="email"
               className="form-input"
-              placeholder="Enter your email"
               value={form.email}
               onChange={handleChange}
               required
@@ -84,18 +88,13 @@ export default function RegisterPage() {
               type="password"
               name="password"
               className="form-input"
-              placeholder="Enter your password"
               value={form.password}
               onChange={handleChange}
               required
             />
           </div>
 
-          <button
-            type="submit"
-            className="register-button"
-            disabled={loading}
-          >
+          <button type="submit" className="register-button" disabled={loading}>
             {loading ? "Registering..." : "Register"}
           </button>
 

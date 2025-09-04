@@ -1,12 +1,12 @@
-import { useState, useContext } from "react";
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { LogIn, UserPlus, House, Menu, X, User } from 'lucide-react';
-import { AuthContext } from "../../_shared/context/AuthContext";
-import './navbar.css';
+import { LogIn, UserPlus, House, Menu, X, User } from "lucide-react";
+import { useAuthStore } from "../_shared/store/useAuthStore";
+import "./navbar.css";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
-  const { username, logout } = useContext(AuthContext);
+  const { username, logout } = useAuthStore();
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -22,7 +22,7 @@ export default function Navbar() {
         {isOpen ? <X /> : <Menu />}
       </div>
 
-      <ul className={`nav-links ${isOpen ? 'open' : ''}`}>
+      <ul className={`nav-links ${isOpen ? "open" : ""}`}>
         <li>
           <Link to="/" className="nav-link"><House /> Home</Link>
         </li>

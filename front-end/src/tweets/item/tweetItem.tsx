@@ -1,34 +1,40 @@
 import { Trash2 } from "lucide-react";
 import { useState } from "react";
-import api from "../../../_shared/api/axios";
+import api from "../../_shared/api/axios";
 import "./tweetItem.css";
 
 interface TweetItemProps {
   id: string;
   content: string;
-  userId: string;     
+  userId: string;
   currentUserId: string | null;
   onDelete: (id: string) => void;
 }
 
 export function TweetItem({ id, content, userId, currentUserId, onDelete }: TweetItemProps) {
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  function useTweetDelete(id: string, ownerId: string, currentUserId: string | null) {
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState<string | null>(null);
 
-  const deleteTweet = async () => {
-    setLoading(true);
-    setError(null);
-    try {
-      await api.delete(`/tweets/${id}`);
-      onDelete(id);
-    } catch {
-      setError("Nepodarilo sa zmazať tweet.");
-    } finally {
-      setLoading(false);
-    }
-  };
+    const deleteTweet = async () => {
+      setLoading(true);
+      setError(null);
+      try {
+        await api.delete(`/tweets/${id}`);
+        onDelete(id);
+      } catch {
+        setError("Nepodarilo sa zmazať tweet.");
+      } finally {
+        setLoading(false);
+      }
+    };
 
-  const canDelete = userId === currentUserId;
+    const canDelete = ownerId === currentUserId;
+
+    return { deleteTweet, canDelete, loading, error };
+  }
+
+  const { deleteTweet, canDelete, loading, error } = useTweetDelete(id, userId, currentUserId);
 
   return (
     <div className="tweet-item">
